@@ -70,19 +70,20 @@ export const ItemListContainer=({texto})=>
 {
     const { categoria } = useParams()
     const [Productos, setProductos] = useState([ ])
-    var titulo= 'Plantas'
+    const [Titulo, setTitulo] = useState('Plantas')
    
     useEffect(()=>{
         if (categoria)
         {
             console.log(categoria)
             getData.then(res => {setProductos(res.filter(prod => prod.categoria === categoria))})
-            titulo=`Plantas de ${categoria}` 
+            setTitulo(`Plantas de ${categoria}` )
         }
         else
         {
             
             getData.then(res => {setProductos(res)})
+            setTitulo('Plantas')
         }
 
     },[categoria])
@@ -90,7 +91,7 @@ export const ItemListContainer=({texto})=>
     return (
             
             <div className="container align-center">
-                <h2> {titulo}  </h2>
+                <h2> {Titulo}  </h2>
                 <ItemList key='IdItemListCOntainer' items={Productos}/> 
             </div>
     );
