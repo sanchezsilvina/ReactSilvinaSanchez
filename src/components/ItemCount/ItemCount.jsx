@@ -19,7 +19,6 @@ import { useState } from 'react';
          }
         
     } 
-    
 
     return (
           <div className="contenedor align-center"> 
@@ -31,8 +30,8 @@ import { useState } from 'react';
                     </div>
                </div>
                <div className="row">
-                    <div className="col-12 mt-2">
-                         <Button className="center-block" onClick={onAdd}>Agregar al Carrito</Button>
+                    <div className="col-12 mt-2">             
+                         <Button className="center-block" onClick={ () => onAdd (count) }>Agregar al Carrito</Button>
                     </div>
               </div>
           </div>
