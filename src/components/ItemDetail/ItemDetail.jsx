@@ -3,25 +3,22 @@ import "./ItemDetail.css";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button  } from 'react-bootstrap';
+import {useCartContext} from "../context/cartContext";
 
  const ItemDetail=({item})=>
 {
 	const [Cantidad, setCantidad] = useState(0)
-	const [Producto, setProducto] = useState('')
 	const [Click, setClick] = useState(false)
-   
-	// useEffect(()=>
-	// {
-	// 	setProducto(item.titulo)
-	// 	console.log(Producto)
-	// },[])
-	
+    const {cartList, agregarAlCarrito}= useCartContext();
 
 	const HandlerAdd= (count)=>
     {
-	  setProducto('helecho')
+	  
 	  setCantidad(count)
 	  setClick(true) 
+	  console.log(item)
+	  console.log('item')
+	  agregarAlCarrito({...item, cantidad: count})
 	  
     }
 	
