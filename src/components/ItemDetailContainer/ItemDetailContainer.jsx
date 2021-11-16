@@ -74,7 +74,7 @@ export const ItemDetailContainer=()=>
 
     useEffect(()=>{
         console.log(id)
-        getItem.then(res => {setProductos(res.filter(prod => prod.id===parseInt(id)))})
+        getItem.then(res => {setProductos(res.find(prod => prod.id===parseInt(id)))})
     },[id])
     
     return (     
