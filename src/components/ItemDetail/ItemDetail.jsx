@@ -9,7 +9,7 @@ import {useCartContext} from "../context/cartContext";
 {
 	const [Cantidad, setCantidad] = useState(0)
 	const [Click, setClick] = useState(false)
-    const {cartList, agregarAlCarrito}= useCartContext();
+    const {addItem}= useCartContext();
 
 	const HandlerAdd= (count)=>
     {
@@ -18,7 +18,7 @@ import {useCartContext} from "../context/cartContext";
 	  setClick(true) 
 	  console.log(item)
 	  console.log('item')
-	  agregarAlCarrito({...item, cantidad: count})
+	  addItem({...item, cantidad: count})
 	  
     }
 	
@@ -37,7 +37,9 @@ import {useCartContext} from "../context/cartContext";
 				<div className="dproduct-stock" > Stock {item.stock} </div>
 			</div>
 			{(Click)? 
-			<Link to={`/cart/${Cantidad}`}> <Button className="mt-2" >Finalizar Compra</Button> </Link> :
+			<div>
+			<Link to={`/cart/${Cantidad}`}> <Button className="mt-2" >Ir al carrito</Button> </Link> 
+			<Link to={`/`}> <Button className="mt-2" >Seguir Comprando</Button> </Link> </div>:
 			<ItemCount onAdd={HandlerAdd} stock= {item.stock} initial= {1}/> }
 		</div>
 	</div>
