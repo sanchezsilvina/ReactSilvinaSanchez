@@ -60,18 +60,20 @@
     
     ]
 
-const getData = new Promise ((resolve,reject) => {
-    setInterval(() => {
-        resolve(listproductos)  
-    }, 2000);
-})
-
 export const ItemListContainer=({texto})=>
 {
     const { categoria } = useParams()
     const [Productos, setProductos] = useState([ ])
     const [Titulo, setTitulo] = useState('Plantas')
-   
+    const [loading, setloading] = useState(true)
+
+    const getData = new Promise ((resolve,reject) => {
+        setInterval(() => {
+            resolve(listproductos)  
+            setloading(false)
+        }, 2000);
+    })
+
     useEffect(()=>{
         if (categoria)
         {
@@ -92,7 +94,8 @@ export const ItemListContainer=({texto})=>
             
             <div className="container align-center">
                 <h2> {Titulo}  </h2>
-                <ItemList key='IdItemListCOntainer' items={Productos}/> 
+                {loading?<h3>Cargando....</h3>:
+                <ItemList key='IdItemListCOntainer' items={Productos}/>}
             </div>
     );
 }
