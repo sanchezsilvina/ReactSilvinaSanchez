@@ -16,8 +16,6 @@ import {useCartContext} from "../context/cartContext";
 	  
 	  setCantidad(count)
 	  setClick(true) 
-	  console.log(item)
-	  console.log('item')
 	  addItem({...item, cantidad: count})
 	  
     }

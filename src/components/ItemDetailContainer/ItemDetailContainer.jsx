@@ -60,26 +60,28 @@ const listproductos= [
     
     ]
 
-const getItem = new Promise ((resolve,reject) => {
-    setInterval(() => {
-        resolve(listproductos)  
-    }, 2000);
-})
+
 
 export const ItemDetailContainer=()=>
 {
     const { id } = useParams()
-     
     const [Productos, setProductos] = useState([])
+    const [loading, setloading] = useState(true)
 
+    const getItem = new Promise ((resolve,reject) => {
+        setInterval(() => {
+            resolve(listproductos)  
+            setloading(false)
+        }, 2000);
+    })
+    
     useEffect(()=>{
-        console.log(id)
         getItem.then(res => {setProductos(res.filter(prod => prod.id===parseInt(id)))})
     },[id])
     
     return (     
         <>  
-            {Productos.map((item,index)=>  <ItemDetail key={index} item={item}/> )}
+            {loading?<h3>Cargando....</h3>: Productos.map((item,index)=>  <ItemDetail key={index} item={item}/> )}
         </>
     );
 }
