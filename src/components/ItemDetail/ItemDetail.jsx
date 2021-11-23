@@ -10,7 +10,6 @@ import {useCartContext} from "../context/cartContext";
 	const [Cantidad, setCantidad] = useState(0)
 	const [Click, setClick] = useState(false)
     const {addItem}= useCartContext();
-
 	const HandlerAdd= (count)=>
     {
 	  
