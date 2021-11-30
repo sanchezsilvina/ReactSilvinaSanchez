@@ -6,7 +6,7 @@ export const GenerarOrden=(apenom, mail, telef)=>
 {
 
         const { cartList, total} = useCartContext();
-        
+
         console.log ('entro al generar orden')
         let orden= {}
         orden.fecha=firebase.firestore.Timestamp.fromDate(new Date());
@@ -28,7 +28,6 @@ export const GenerarOrden=(apenom, mail, telef)=>
         dbQuery.collection('orders').add(orden)
         .then(
             resp =>  alert(`Su Nro de Orden de Compra es: ${resp.id}`)
-            
             )
         .catch(err => alert(`Ha ocurrido un error: ${err}`))
 

@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import {useState} from "react";
 import { MdDeleteSweep } from 'react-icons/md';
 import { GenerarOrden } from './cartFirebase';
+import { getFirestone } from '../Service/getFirestore';
+import firebase  from 'firebase';
 
 const Cart=()=>
 {
@@ -19,9 +21,52 @@ const Cart=()=>
 
 
     const handlerGenerarOrden=()=>
-    {
-        
-        GenerarOrden(apenom,mail,telef)
+    { 
+        //GenerarOrden(apenom,mail,telef)
+        // clear()
+
+        console.log ('entro al generar orden')
+        let orden= {}
+        orden.fecha=firebase.firestore.Timestamp.fromDate(new Date());
+        orden.comprador={nombre: apenom , email: mail , tel: telef}
+        orden.total=total
+        orden.items= cartList.map
+        (   cartitem=>
+            {
+                const id= cartitem.id;
+                const titulo= cartitem.titulo
+                const precio= cartitem.precio
+                const cantidad= cartitem.cantidad
+                return {id, titulo, precio, cantidad}
+            }
+        )
+
+        const dbQuery=getFirestone()
+
+        dbQuery.collection('orders').add(orden)
+        .then(
+            resp =>  alert(`Su Nro de Orden de Compra es: ${resp.id}`)
+            )
+        .catch(err => alert(`Ha ocurrido un error: ${err}`))
+
+            console.log('cartList')
+            console.log(cartList)
+            const itemToUpdate=dbQuery.collection('items').where(
+                firebase.firestore.FieldPath.documentId(),'in', cartList.map(item => item.id)
+            )
+            
+            console.log('itemToUpdate')
+
+            console.log(itemToUpdate)
+
+            const batch=dbQuery.batch();
+            
+            itemToUpdate.get().then( collection=>{collection.docs.forEach(docSnapshot => {
+                batch.update(docSnapshot.ref, {stock: docSnapshot.data().stock - cartList.find(item => item.id).cantidad
+                            })
+                                                                            })
+                batch.commit().then()
+                })
     }   
 
 
@@ -34,10 +79,10 @@ const Cart=()=>
                 <div>
                     <h6>No hay productos agregados en el carrito</h6>
                     <Link to="/">
-                            <div className="d-block">
-                                <Button variant="primary" >volver</Button>
-                            </div>
-                        </Link>
+                        <div className="d-block">
+                            <Button variant="primary" >volver</Button>
+                        </div>
+                    </Link>
                 </div>
                 
             :
@@ -86,19 +131,17 @@ const Cart=()=>
                 </div> 
 
                 <div className="col-md-3 border border-secondary rounded p-4 mr-2 mt-2">
-                    <form>
-                        <h5 >Finalizar Compra</h5>
-                        <div className="form-group mt-4">
-                            <input type="text" className="form-control" placeholder="Ingrese su apellido y nombre" value={apenom} onChange={event =>setApenom(event.target.value)}/>
-                        </div>
-                        <div className="form-group mt-2">
-                            <input type="email" className="form-control" placeholder="Ingrese su email" value={mail} onChange={event =>setMail(event.target.value)} />
-                        </div>
-                        <div className="form-group">
-                            <input type="text" className="form-control" placeholder="Ingrese su telefono" value={telef} onChange={event =>setTelef(event.target.value)} />
-                        </div>
-                       <button type="submit" className="btn btn-primary btn-block" onClick={()=>handlerGenerarOrden()} >Finalizar</button>
-                    </form>
+                    <h5 >Finalizar Compra</h5>
+                    <div className="form-group mt-4">
+                        <input type="text" className="form-control" placeholder="Ingrese su apellido y nombre" value={apenom} onChange={event =>setApenom(event.target.value)}/>
+                    </div>
+                    <div className="form-group mt-2">
+                        <input type="email" className="form-control" placeholder="Ingrese su email" value={mail} onChange={event =>setMail(event.target.value)} />
+                    </div>
+                    <div className="form-group">
+                        <input type="text" className="form-control" placeholder="Ingrese su telefono" value={telef} onChange={event =>setTelef(event.target.value)} />
+                    </div>
+                    <button className="btn btn-primary btn-block" onClick={()=>handlerGenerarOrden()} >Finalizar</button>
                 </div>
             </div>
             </div>
