@@ -18,16 +18,19 @@ const CartContextProvider = ({children}) => {
     const clear=()=>
     {
         setCartList([])
+        setcantTotal(0)
+        setTotal(0)
+        setcantidadAgregar(0)
     }
 
     const RemoveItem= (idItem)=>
     {
-        const Item=cartList.find(index => index.id===parseInt(idItem))
+        const Item=cartList.find(index => index.id===idItem)
         if (Item)
         {
             setTotal(total -(Item.cantidad * Item.precio))
             setcantTotal(cantTotal-Item.cantidad)
-            setCartList(cartList.filter(res=> res.id !==parseInt(idItem) ))
+            setCartList(cartList.filter(res=> res.id !==idItem ))
         }
     }
     
@@ -38,8 +41,7 @@ const CartContextProvider = ({children}) => {
 
     const addItem= (item)=>{
         
-        console.log('additem')
-        let Item=isInCart(parseInt(item.id))
+        let Item=isInCart(item.id)
         if (Item)
         {   
             let cantAgregar= parseInt(Item.cantidad) + parseInt(item.cantidad)
