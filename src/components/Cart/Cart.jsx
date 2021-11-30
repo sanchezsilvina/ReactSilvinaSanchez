@@ -22,8 +22,6 @@ const Cart=()=>
 
     const handlerGenerarOrden=()=>
     { 
-        //GenerarOrden(apenom,mail,telef)
-        // clear()
 
         console.log ('entro al generar orden')
         let orden= {}
@@ -67,6 +65,8 @@ const Cart=()=>
                                                                             })
                 batch.commit().then()
                 })
+
+                clear()
     }   
 
 
