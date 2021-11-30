@@ -15,6 +15,7 @@ const CartContextProvider = ({children}) => {
     const [cantidadAgregar, setcantidadAgregar]=useState(0)
     const [cantTotal, setcantTotal]=useState(0)
     
+   
     const clear=()=>
     {
         setCartList([])
@@ -28,6 +29,7 @@ const CartContextProvider = ({children}) => {
         const Item=cartList.find(index => index.id===idItem)
         if (Item)
         {
+
             setTotal(total -(Item.cantidad * Item.precio))
             setcantTotal(cantTotal-Item.cantidad)
             setCartList(cartList.filter(res=> res.id !==idItem ))
