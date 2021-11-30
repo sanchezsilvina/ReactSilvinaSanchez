@@ -3,7 +3,6 @@ import {Button} from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import {useState} from "react";
 import { MdDeleteSweep } from 'react-icons/md';
-import { GenerarOrden } from './cartFirebase';
 import { getFirestone } from '../Service/getFirestore';
 import firebase  from 'firebase';
 
@@ -23,7 +22,6 @@ const Cart=()=>
     const handlerGenerarOrden=()=>
     { 
 
-        console.log ('entro al generar orden')
         let orden= {}
         orden.fecha=firebase.firestore.Timestamp.fromDate(new Date());
         orden.comprador={nombre: apenom , email: mail , tel: telef}
@@ -47,15 +45,10 @@ const Cart=()=>
             )
         .catch(err => alert(`Ha ocurrido un error: ${err}`))
 
-            console.log('cartList')
-            console.log(cartList)
             const itemToUpdate=dbQuery.collection('items').where(
                 firebase.firestore.FieldPath.documentId(),'in', cartList.map(item => item.id)
             )
             
-            console.log('itemToUpdate')
-
-            console.log(itemToUpdate)
 
             const batch=dbQuery.batch();
             
