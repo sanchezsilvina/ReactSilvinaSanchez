@@ -13,10 +13,13 @@ import {useCartContext} from "../context/cartContext";
 	const HandlerAdd= (count)=>
     {
 	  
-	  setCantidad(count)
-	  setClick(true) 
-	  addItem({...item, cantidad: count})
-	  
+	  if (item.stock>0)
+	  {
+		setCantidad(count)
+		setClick(true) 
+		addItem({...item, cantidad: count})
+		
+	  }	  
     }
 	
     return (

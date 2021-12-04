@@ -11,7 +11,7 @@ const firebaseConfig = {
   measurementId: "G-FE5JCR9XL1"
 };
 
-// Initialize Firebase
+
 const app = firebase.initializeApp(firebaseConfig);
 
 export function getFirestone()

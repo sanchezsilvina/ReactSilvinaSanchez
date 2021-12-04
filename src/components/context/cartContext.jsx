@@ -15,7 +15,6 @@ const CartContextProvider = ({children}) => {
     const [cantidadAgregar, setcantidadAgregar]=useState(0)
     const [cantTotal, setcantTotal]=useState(0)
     
-   
     const clear=()=>
     {
         setCartList([])
@@ -46,15 +45,14 @@ const CartContextProvider = ({children}) => {
         let Item=isInCart(item.id)
         if (Item)
         {   
-            let cantAgregar= parseInt(Item.cantidad) + parseInt(item.cantidad)
-            setcantidadAgregar(cantAgregar)
-            if (cantAgregar > item.stock)
+            setcantidadAgregar(parseInt(Item.cantidad) + parseInt(item.cantidad))
+            if (cantidadAgregar > item.stock || item.stock===0)
              {
-                 alert('No hay Stock para la cantidad ingresada')   
+                 alert(`No hay Stock para la cantidad ingresada. Stock ${item.stock}`)   
              }  
              else
              {
-                Item.cantidad=cantAgregar
+                Item.cantidad=cantidadAgregar
                 setTotal(total +(item.cantidad * item.precio))
                 setcantTotal(cantTotal +item.cantidad)
              }
